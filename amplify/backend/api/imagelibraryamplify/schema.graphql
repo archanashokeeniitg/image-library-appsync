@@ -1,0 +1,31 @@
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String!
+}
+
+type Picture
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["Admin"]
+        queries: [get, list]
+        mutations: [create, delete]
+      }
+      {
+        allow: groups
+        groups: ["customers"]
+        queries: [get, list]
+        mutations: [create, update, delete]
+      }
+    ]
+  ) {
+  id: ID!
+  name: String
+  owner: String
+
+  # Refrence the S3Object  type from a field.
+  file: S3Object
+}
