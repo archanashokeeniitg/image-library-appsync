@@ -3,7 +3,7 @@ import "./App.css";
 
 //amplify exports
 import Amplify from "aws-amplify";
-import { AmplifyAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
+import { AmplifyAuthenticator } from "@aws-amplify/ui-react";
 import awsExports from "./aws-exports";
 
 //components imports
@@ -14,6 +14,7 @@ Amplify.configure(awsExports);
 
 function App() {
   const [user, setUser] = useState("");
+
   useEffect(() => {
     document.body.style.background =
       "linear-gradient(45deg, #51547e 30%, #0a3f74 90%)";
@@ -21,9 +22,7 @@ function App() {
   return (
     <AmplifyAuthenticator style={{ textAlign: "center" }}>
       <div className="App">
-        <row>
-          <Header />
-        </row>
+        <Header />
         Hello I'm clean!!
         <Footer />
       </div>
