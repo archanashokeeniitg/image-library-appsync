@@ -34,7 +34,7 @@ class Upload extends React.Component {
         file: {
           bucket: awsExports.aws_user_files_s3_bucket,
           region: awsExports.aws_user_files_s3_bucket_region,
-          key: "public/" + file.name,
+          key: file.name,
         },
       };
       console.log("image stored in s3 is:", image);
