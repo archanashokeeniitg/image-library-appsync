@@ -31,7 +31,7 @@ const Header = (props) => {
               </NavLink>
             </NavItem>
           </Nav>
-          <NavItem className="text-white">
+          <NavItem className="text-white " style={{ paddingLeft: "40%" }}>
             <i className="fa fa-user " aria-hidden="true"></i>
             &nbsp;
             {props.user.username} &nbsp;
