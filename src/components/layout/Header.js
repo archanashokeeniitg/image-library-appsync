@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 //components
 import Home from "../Home";
@@ -11,7 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from "reactstrap";
 const history = createHistory();
 
-const Header = () => {
+const Header = (props) => {
   return (
     <div>
       <Router history={history}>
@@ -31,6 +31,11 @@ const Header = () => {
               </NavLink>
             </NavItem>
           </Nav>
+          <NavItem className="text-white">
+            <i className="fa fa-user " aria-hidden="true"></i>
+            &nbsp;
+            {props.user.username} &nbsp;
+          </NavItem>
           <AmplifySignOut />
         </Navbar>
         <Route path="/" exact component={Home} />
