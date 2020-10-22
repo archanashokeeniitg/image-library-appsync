@@ -51,9 +51,18 @@ class Upload extends React.Component {
           <p> Please Select an image to Upload</p>
           <input type="file" onChange={(e) => this.handleChange(e)} />
         </div>
-        <div className=" container card">
-          <img src={this.state.file} />
-        </div>
+
+        {this.state.file ? (
+          <div>
+            <img
+              className="jumbotron"
+              src={this.state.file}
+              alt=" image uploading area..."
+              width="300"
+              height="450"
+            />
+          </div>
+        ) : null}
       </div>
     );
   }
