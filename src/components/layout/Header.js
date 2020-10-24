@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 //components
 import Home from "../Home";

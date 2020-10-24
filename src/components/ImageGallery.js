@@ -1,18 +1,15 @@
 import React, { Component } from "react";
-import { Card, CardImg, Row, Col } from "reactstrap";
+import { Card, CardImg, Row, Col, CardText } from "reactstrap";
 
 class ImageGallery extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     console.log("inside Imagegallery", this.props.images);
     return (
       <div className="container">
         <Row>
           {this.props.images.map((image) => (
-            <Col>
-              <Card key={image.id} className="  jumbotron ">
+            <Col key={image.id}>
+              <Card className="  jumbotron ">
                 <div>
                   <i
                     className="fa fa-trash pull-left "
@@ -34,6 +31,7 @@ class ImageGallery extends Component {
                     width="100"
                     height="200"
                   />
+                  <CardText>owned by {image.owner}</CardText>
                 </div>
               </Card>
             </Col>

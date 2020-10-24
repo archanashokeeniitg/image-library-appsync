@@ -6,7 +6,8 @@ import { deletePicture } from "../graphql/mutations";
 
 function Home(props) {
   const [images, setImages] = useState([]);
-  const [picture, setPicture] = useState("");
+  const [picture] = useState("");
+  const [myAlert, setMyAlert] = useState(false);
 
   useEffect(() => {
     getAllImagesToState();
@@ -16,7 +17,6 @@ function Home(props) {
   const getAllImagesToState = async () => {
     const result = await API.graphql(graphqlOperation(listPictures));
     let imageArray = await buildImageArray(result.data.listPictures.items);
-    console.log("imageARrya", imageArray);
     setImages(imageArray);
   };
   const buildImageArray = async (listPictures) => {
@@ -25,7 +25,6 @@ function Home(props) {
   const getImagesFileList = async (imageList) => {
     return Promise.all(
       imageList.map(async (i) => {
-        console.log("getImagesFileList", i);
         return getOneFormatedImage(i);
       })
     );
@@ -35,6 +34,7 @@ function Home(props) {
     return {
       src: await Storage.get(image.file.key),
       id: image.id,
+      owner: image.owner,
     };
   };
 
@@ -43,34 +43,32 @@ function Home(props) {
     const id = {
       id: imageId,
     };
-    console.log("imageid", id);
     try {
       await API.graphql(graphqlOperation(deletePicture, { input: id }));
-      console.log(images);
 
       const i = images.filter((value, index, arr) => {
         return value.id !== imageId;
       });
       setImages(i);
-      alert("image deleted!!!");
+      setMyAlert(true);
     } catch (error) {
       console.log(error);
-
       alert("Cannot delete: User doesn't own this image");
     }
   };
 
   const downloadImage = async (imgSrc) => {
-    const src = {
-      src: imgSrc,
-    };
-    alert(imgSrc);
     console.log("imgSrc", imgSrc);
   };
 
   return (
     <div>
-      Home Page
+      {myAlert ? (
+        <div id="success-alert" className="alert alert-danger" role="alert">
+          image deleted successfully!!!
+        </div>
+      ) : null}
+
       <ImageGallery
         images={images}
         deleteImage={deleteImage}
