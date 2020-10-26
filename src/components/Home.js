@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ImageGallery from "./ImageGallery";
 import { Storage, API, graphqlOperation } from "aws-amplify";
-import { listPictures } from "../graphql/queries";
+import { listPictures, getPicture } from "../graphql/queries";
 import { deletePicture } from "../graphql/mutations";
 
 function Home(props) {
@@ -35,6 +35,7 @@ function Home(props) {
       src: await Storage.get(image.file.key),
       id: image.id,
       owner: image.owner,
+      tag: image.tag,
     };
   };
 
@@ -57,8 +58,18 @@ function Home(props) {
     }
   };
 
-  const downloadImage = async (imgSrc) => {
-    console.log("imgSrc", imgSrc);
+  const downloadImage = async (src) => {
+    console.log("src", src);
+    // const response = await API.graphql(
+    //   graphqlOperation(getPicture, { id: id })
+    // );
+    // const signedURL = await Storage.get(formData.image);
+    // formData.image = signedURL;
+
+    // console.log("id download", id);
+    // const signedURL = await Storage.get();
+    // console.log("signed Url", signedURL);
+    //console.log("signeddd url", response.data.getPicture.file);
   };
 
   return (

@@ -7,6 +7,7 @@ export const getPicture = /* GraphQL */ `
       id
       name
       owner
+      tag
       file {
         bucket
         region
@@ -28,6 +29,7 @@ export const listPictures = /* GraphQL */ `
         id
         name
         owner
+        tag
         file {
           bucket
           region

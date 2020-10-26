@@ -12,7 +12,7 @@ type Picture
         allow: groups
         groups: ["Admin"]
         queries: [get, list]
-        mutations: [create, delete]
+        mutations: [create, update, delete]
       }
       {
         allow: owner
@@ -24,6 +24,7 @@ type Picture
   id: ID!
   name: String
   owner: String
+  tag: String
 
   # Refrence the S3Object  type from a field.
   file: S3Object
