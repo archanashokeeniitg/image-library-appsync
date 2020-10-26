@@ -41,14 +41,6 @@ function ImageGallery(props) {
           <Col key={image.id}>
             <Card className=" jumbotron ">
               <div>
-                <CardText>owned by {image.owner}</CardText>
-                <CardImg
-                  className=""
-                  src={image.src}
-                  alt="Smiley face"
-                  width="100"
-                  height="200"
-                />
                 <i
                   className="fa fa-trash pull-left "
                   aria-hidden="true"
@@ -71,20 +63,34 @@ function ImageGallery(props) {
                   }}
                 ></i>
 
-                {toggle ? (
-                  <input
-                    type="text"
-                    // value={editedTag}
-                    defaultValue={image.tag}
-                    // placeholder="Enter image Tag Here before uploading your file"
-                    onChange={(e) =>
-                      handleOnTagChange(e.target.value, image.id)
-                    }
-                    // onChange={({ target }) => setEditedTag(target.value)}
-                  />
-                ) : (
-                  <CardText>{image.tag}</CardText>
-                )}
+                <CardImg
+                  className=""
+                  src={image.src}
+                  alt="Smiley face"
+                  width="100"
+                  height="200"
+                />
+                <br />
+                <div className="align-items-start">
+                  <CardText>owner : {image.owner}</CardText>
+
+                  {toggle ? (
+                    <input
+                      type="text"
+                      // value={editedTag}
+                      defaultValue={image.tag}
+                      // placeholder="Enter image Tag Here before uploading your file"
+                      onChange={(e) =>
+                        handleOnTagChange(e.target.value, image.id)
+                      }
+                      // onChange={({ target }) => setEditedTag(target.value)}
+                    />
+                  ) : (
+                    <CardText> Tag : {image.tag}</CardText>
+                  )}
+
+                  <CardText> Dated: {image.updatedAt.toString()}</CardText>
+                </div>
               </div>
             </Card>
           </Col>

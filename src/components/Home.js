@@ -36,6 +36,8 @@ function Home(props) {
       id: image.id,
       owner: image.owner,
       tag: image.tag,
+      createdAt: image.createdAt,
+      updatedAt: image.updatedAt,
     };
   };
 
