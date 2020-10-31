@@ -1,7 +1,7 @@
 import React, { Component, useState } from "react";
 import { Card, CardImg, Row, Col, CardText } from "reactstrap";
 
-import { API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation, label } from "aws-amplify";
 import { updatePicture } from "../graphql/mutations";
 // import awsExports from "../aws-exports";
 
@@ -9,8 +9,8 @@ function ImageGallery(props) {
   const [editedTag, setEditedTag] = useState("");
   const [imageID, setImageID] = useState("");
   const [toggle, setToggle] = useState(false);
+  //const [imageLabels, setImageLabels] = useState(undefined);
   console.log("inside Imagegallery", props);
-  console.log("inside selected ", imageID);
 
   const updateDB = async (payload) => {
     console.log("inside db updateDB", payload);
@@ -77,19 +77,17 @@ function ImageGallery(props) {
                   {toggle ? (
                     <input
                       type="text"
-                      // value={editedTag}
                       defaultValue={image.tag}
-                      // placeholder="Enter image Tag Here before uploading your file"
                       onChange={(e) =>
                         handleOnTagChange(e.target.value, image.id)
                       }
-                      // onChange={({ target }) => setEditedTag(target.value)}
                     />
                   ) : (
                     <CardText> Tag : {image.tag}</CardText>
                   )}
 
                   <CardText> Dated: {image.updatedAt.toString()}</CardText>
+                  <CardText>{image.lables.join(", ")}</CardText>
                 </div>
               </div>
             </Card>

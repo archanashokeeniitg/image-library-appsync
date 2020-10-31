@@ -25,6 +25,7 @@ type Picture
   name: String
   owner: String
   tag: String
+  labels: [String]
 
   # Refrence the S3Object  type from a field.
   file: S3Object

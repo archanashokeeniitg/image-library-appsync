@@ -36,6 +36,7 @@ function Home(props) {
       id: image.id,
       owner: image.owner,
       tag: image.tag,
+      lables: image.labels,
       createdAt: image.createdAt,
       updatedAt: image.updatedAt,
     };
@@ -62,6 +63,13 @@ function Home(props) {
 
   const downloadImage = async (src) => {
     console.log("src", src);
+    // const signedURL = await Storage.get(key);
+    // console.log("signedURL", signedURL);
+    // <a href={signedURL} target="_blank">{fileName}</a>
+
+    // inside your template or JSX code. Note <a download> doesn't work here because it is not same origin
+    // <a href={signedURL} target="_blank">{fileName}</a>
+
     // const response = await API.graphql(
     //   graphqlOperation(getPicture, { id: id })
     // );

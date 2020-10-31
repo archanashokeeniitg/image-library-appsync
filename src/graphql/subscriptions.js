@@ -8,6 +8,7 @@ export const onCreatePicture = /* GraphQL */ `
       name
       owner
       tag
+      labels
       file {
         bucket
         region
@@ -25,6 +26,7 @@ export const onUpdatePicture = /* GraphQL */ `
       name
       owner
       tag
+      labels
       file {
         bucket
         region
@@ -42,6 +44,7 @@ export const onDeletePicture = /* GraphQL */ `
       name
       owner
       tag
+      labels
       file {
         bucket
         region
