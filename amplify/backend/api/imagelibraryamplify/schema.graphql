@@ -20,7 +20,8 @@ type Picture
         mutations: [create, update, delete]
       }
     ]
-  ) {
+  )
+  @searchable {
   id: ID!
   name: String
   owner: String

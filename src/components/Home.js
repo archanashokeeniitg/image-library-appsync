@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import ImageGallery from "./ImageGallery";
+import SearchImage from "./SearchImage";
 import { Storage, API, graphqlOperation } from "aws-amplify";
-import { listPictures, getPicture } from "../graphql/queries";
+import { listPictures, getPicture, searchPictures } from "../graphql/queries";
 import { deletePicture } from "../graphql/mutations";
 
 function Home(props) {
   const [images, setImages] = useState([]);
   const [picture] = useState("");
   const [myAlert, setMyAlert] = useState(false);
+  // const [searchTag, setSearchTag] = useState("");
 
   useEffect(() => {
     getAllImagesToState();
@@ -82,13 +84,49 @@ function Home(props) {
     //console.log("signeddd url", response.data.getPicture.file);
   };
 
+  const searchImage = async (searchLabel) => {
+    var result;
+    console.log("searchLabel", searchLabel);
+
+    // when no search filter is passed, revert back to full list
+    if (searchLabel.label == "") {
+      await getAllImagesToState();
+    } else {
+      const filter = {
+        labels: {
+          match: {
+            labels: searchLabel,
+          },
+        },
+      };
+      result = await API.graphql(
+        graphqlOperation(searchPictures, { filter: filter })
+      );
+
+      if (result.data.searchPictures.items.length > 0) {
+        let imageArray = await buildImageArray(
+          result.data.searchPictures.items
+        );
+        console.log(" imageArray", imageArray);
+        setImages(imageArray);
+      } else {
+        alert(" Sorry! nothing matches your search");
+      }
+    }
+  };
+
   return (
     <div>
+      <div className="row d-flex justify-content-center">
+        <SearchImage searchImage={searchImage} />
+      </div>
+
       {myAlert ? (
         <div id="success-alert" className="alert alert-danger" role="alert">
           image deleted successfully!!!
         </div>
       ) : null}
+      <br />
 
       <ImageGallery
         images={images}

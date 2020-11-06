@@ -4,6 +4,7 @@ import { Card, CardImg, Row, Col, CardText } from "reactstrap";
 import { API, graphqlOperation, label } from "aws-amplify";
 import { updatePicture } from "../graphql/mutations";
 // import awsExports from "../aws-exports";
+import "./Home.css";
 
 function ImageGallery(props) {
   const [editedTag, setEditedTag] = useState("");
@@ -87,7 +88,12 @@ function ImageGallery(props) {
                   )}
 
                   <CardText> Dated: {image.updatedAt.toString()}</CardText>
-                  <CardText>{image.lables.join(", ")}</CardText>
+
+                  <CardText className="img-label">
+                    <b>** Labels using Rekognition</b>
+                    <br />
+                    {image.lables.join(", ")}
+                  </CardText>
                 </div>
               </div>
             </Card>
