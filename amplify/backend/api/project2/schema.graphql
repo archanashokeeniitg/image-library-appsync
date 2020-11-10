@@ -1,17 +1,33 @@
-type Task
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String!
+}
+
+type Picture
   @model
   @auth(
     rules: [
-      { allow: groups, groups: ["Managers"], queries: null, mutations: [create, update, delete] }
-      { allow: groups, groups: ["Employees"], queries: [get, list], mutations: null }
+      {
+        allow: groups
+        groups: ["Admin"]
+        queries: [get, list]
+        mutations: [create, update, delete]
+      }
+      {
+        allow: owner
+        queries: [get, list]
+        mutations: [create, update, delete]
+      }
     ]
-  ) {
+  )
+  @searchable {
   id: ID!
-  title: String!
-  description: String
-  status: String
-}
-type PrivateNote @model @auth(rules: [{ allow: owner }]) {
-  id: ID!
-  content: String!
+  name: String
+  owner: String
+  tag: String
+  labels: [String]
+
+  # Refrence the S3Object  type from a field.
+  file: S3Object
 }

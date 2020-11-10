@@ -1,63 +1,78 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getTask = /* GraphQL */ `
-  query GetTask($id: ID!) {
-    getTask(id: $id) {
+export const getPicture = /* GraphQL */ `
+  query GetPicture($id: ID!) {
+    getPicture(id: $id) {
       id
-      title
-      description
-      status
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listTasks = /* GraphQL */ `
-  query ListTasks(
-    $filter: ModelTaskFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        title
-        description
-        status
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getPrivateNote = /* GraphQL */ `
-  query GetPrivateNote($id: ID!) {
-    getPrivateNote(id: $id) {
-      id
-      content
-      createdAt
-      updatedAt
+      name
       owner
+      tag
+      labels
+      file {
+        bucket
+        region
+        key
+      }
+      createdAt
+      updatedAt
     }
   }
 `;
-export const listPrivateNotes = /* GraphQL */ `
-  query ListPrivateNotes(
-    $filter: ModelPrivateNoteFilterInput
+export const listPictures = /* GraphQL */ `
+  query ListPictures(
+    $filter: ModelPictureFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listPrivateNotes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listPictures(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        content
+        name
+        owner
+        tag
+        labels
+        file {
+          bucket
+          region
+          key
+        }
         createdAt
         updatedAt
-        owner
       }
       nextToken
+    }
+  }
+`;
+export const searchPictures = /* GraphQL */ `
+  query SearchPictures(
+    $filter: SearchablePictureFilterInput
+    $sort: SearchablePictureSortInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    searchPictures(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        owner
+        tag
+        labels
+        file {
+          bucket
+          region
+          key
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+      total
     }
   }
 `;
