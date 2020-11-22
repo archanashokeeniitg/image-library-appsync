@@ -28,17 +28,19 @@ function FindImage(props) {
   return (
     <>
         <form onSubmit={searchPhotos} className="form-inline" >
-            <input
-                type="text"
-                name="query"
-                className="form-control"
-                placeholder={`Search Using Labels`}
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-            />
-            <button className="btn btn-primary" type="submit">
-            Search
-            </button>
+            <div class="input-group">
+                <input
+                    type="text"
+                    name="query"
+                    className="form-control"
+                    placeholder={`Search Using Labels`}
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                />
+                <button className="btn btn-primary" type="submit">
+                Search
+                </button>
+            </div>
       </form>
       <div className="card-list">
         {
