@@ -90,7 +90,7 @@ function ImageGallery(props) {
                   <CardText> Dated: {image.updatedAt.toString()}</CardText>
 
                   <CardText className="img-label">
-                    <b>** Labels using Rekognition</b>
+                    <b>Labels using Rekognition</b>
                     <br />
                     {image.lables.join(", ")}
                   </CardText>
