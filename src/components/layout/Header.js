@@ -3,7 +3,8 @@ import React from "react";
 //components
 import Home from "../Home";
 import Upload from "../Upload";
-import Find from "../FindImage"
+import Albums from "../Albums";
+import Find from "../FindImage";
 
 import { Router, Route } from "react-router-dom";
 import { createBrowserHistory as createHistory } from "history";
@@ -29,6 +30,11 @@ const Header = (props) => {
             <NavItem>
               <NavLink className="text-white" href="/upload">
                 upload Image
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className="text-white" href="/Albums">
+                Albums
               </NavLink>
             </NavItem>
             <NavItem>
