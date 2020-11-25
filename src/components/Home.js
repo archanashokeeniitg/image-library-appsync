@@ -39,6 +39,7 @@ function Home(props) {
       owner: image.owner,
       tag: image.tag,
       lables: image.labels,
+      celeb: image.celeb,
       createdAt: image.createdAt,
       updatedAt: image.updatedAt,
     };
@@ -65,23 +66,23 @@ function Home(props) {
 
   const downloadImage = async (src) => {
     console.log("src", src);
-    // const signedURL = await Storage.get(key);
-    // console.log("signedURL", signedURL);
-    // <a href={signedURL} target="_blank">{fileName}</a>
+      // const signedURL = await Storage.get(key);
+      // console.log("signedURL", signedURL);
+      // <a href={signedURL} target="_blank">{fileName}</a>
 
-    // inside your template or JSX code. Note <a download> doesn't work here because it is not same origin
-    // <a href={signedURL} target="_blank">{fileName}</a>
+      // inside your template or JSX code. Note <a download> doesn't work here because it is not same origin
+      // <a href={signedURL} target="_blank">{fileName}</a>
 
-    // const response = await API.graphql(
-    //   graphqlOperation(getPicture, { id: id })
-    // );
-    // const signedURL = await Storage.get(formData.image);
-    // formData.image = signedURL;
+      // const response = await API.graphql(
+      //   graphqlOperation(getPicture, { id: id })
+      // );
+      // const signedURL = await Storage.get(formData.image);
+      // formData.image = signedURL;
 
-    // console.log("id download", id);
-    // const signedURL = await Storage.get();
-    // console.log("signed Url", signedURL);
-    //console.log("signeddd url", response.data.getPicture.file);
+      // console.log("id download", id);
+      // const signedURL = await Storage.get();
+      // console.log("signed Url", signedURL);
+      //console.log("signeddd url", response.data.getPicture.file);
   };
 
   const searchImage = async (searchLabel) => {

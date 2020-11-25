@@ -9,6 +9,7 @@ function Upload(props) {
   const [alert, setAlert] = useState(false);
   const [tag, setTag] = useState("");
   const [labels, setLabels] = useState([]);
+  const [celeb, setCeleb] = useState([]);
 
   const findImageLabels = async (file) => {
     console.log("inside Label");
@@ -32,6 +33,60 @@ function Upload(props) {
 
       .catch((err) => console.log({ err }));
   };
+
+  const celebritySearch = async (file) => {
+      console.log("Inside celeb");
+      return Predictions.identify({
+        entities: {
+          source: {
+            file,
+          },
+          celebrityDetection: true // boolean. It will only show detected celebrities 
+        }
+      })
+      .then(({ response }) => {
+        response.entities.forEach(({ boundingBox, landmarks, metadata }) => {
+          const { 
+              name,
+              urls 
+          } = metadata; // celebrity info
+          let celeb = response.entities.map((label) => {
+            if (celeb.metadata.confidence > 70) return celeb.name;
+          });
+          return celeb.filter(Boolean);
+        })
+      })
+      .catch(err => console.log({ err }));
+  };
+
+  const faceRec = async (file) => {
+      console.log("Inside FaceRec");
+      return Predictions.identify({
+        entities: {
+          source: {
+            file,
+          },
+        }
+      })
+      .then(({ entities }) => {
+        entities.forEach(({boundingBox, landmarks}) => {
+          const { 
+            width, // ratio of overall image width
+            height, // ratio of overall image height
+            left, // left coordinate as a ratio of overall image width
+            top // top coordinate as a ratio of overall image height
+          } = boundingBox;
+          landmarks.forEach(landmark => {
+              const {
+                  type, // string "eyeLeft", "eyeRight", "mouthLeft", "mouthRight", "nose"
+                  x, // ratio of overall image width
+                  y // ratio of overall image height
+              } = landmark;
+          })
+        })
+      })
+      .catch(err => console.log({ err }));
+  }
 
   const sendImageToDB = async (image) => {
     console.log("inside db write", image);
@@ -58,7 +113,7 @@ function Upload(props) {
       contentType: "image/png",
     }).then((result) => {
       findImageLabels(selectedFile).then((labels) => {
-        console.log("m retuenddd", labels);
+        console.log("m returnddd", labels);
         setLabels(labels);
 
         // this.selectedFileState({ file: URL.createObjectURL(selectedFile) });
@@ -86,7 +141,7 @@ function Upload(props) {
     <div className="container">
       {alert ? (
         <div className="alert alert-success" role="alert">
-          image sucessfully uploaded!!!
+          Image Sucessfully Uploaded!!!
         </div>
       ) : null}
       <form className="jumbotron" onSubmit={handleChange}>

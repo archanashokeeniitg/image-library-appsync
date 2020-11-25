@@ -10,6 +10,6 @@
     "adminAuthProtected": "DISALLOW",
     "adminGuestProtected": "DISALLOW",
     "identifyType": "identifyLabels",
-    "access": "auth",
-    "type": "LABELS"
+    "access": "authAndGuest",
+    "type": "ALL"
 }

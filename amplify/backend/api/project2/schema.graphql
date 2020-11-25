@@ -27,6 +27,7 @@ type Picture
   owner: String
   tag: String
   labels: [String]
+  celeb: [String]
 
   # Refrence the S3Object  type from a field.
   file: S3Object
