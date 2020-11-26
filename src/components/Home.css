@@ -1,0 +1,10 @@
+.img-label {
+  font-size: 10px;
+  color: white;
+  background-color: rgb(103, 48, 158);
+  margin-top: 2px;
+  margin-right: 4px;
+  margin-bottom: 2px;
+  padding: 6px;
+  border-radius: 3px;
+}

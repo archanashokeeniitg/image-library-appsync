@@ -8,6 +8,7 @@ export const getPicture = /* GraphQL */ `
       name
       owner
       tag
+      labels
       file {
         bucket
         region
@@ -30,6 +31,7 @@ export const listPictures = /* GraphQL */ `
         name
         owner
         tag
+        labels
         file {
           bucket
           region
@@ -39,6 +41,38 @@ export const listPictures = /* GraphQL */ `
         updatedAt
       }
       nextToken
+    }
+  }
+`;
+export const searchPictures = /* GraphQL */ `
+  query SearchPictures(
+    $filter: SearchablePictureFilterInput
+    $sort: SearchablePictureSortInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    searchPictures(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        owner
+        tag
+        labels
+        file {
+          bucket
+          region
+          key
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+      total
     }
   }
 `;

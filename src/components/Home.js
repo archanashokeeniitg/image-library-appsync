@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import ImageGallery from "./ImageGallery";
+import SearchImage from "./SearchImage";
 import { Storage, API, graphqlOperation } from "aws-amplify";
-import { listPictures, getPicture } from "../graphql/queries";
+import { listPictures, getPicture, searchPictures } from "../graphql/queries";
 import { deletePicture } from "../graphql/mutations";
 
 function Home(props) {
   const [images, setImages] = useState([]);
   const [picture] = useState("");
   const [myAlert, setMyAlert] = useState(false);
+  // const [searchTag, setSearchTag] = useState("");
 
   useEffect(() => {
     getAllImagesToState();
@@ -36,6 +38,7 @@ function Home(props) {
       id: image.id,
       owner: image.owner,
       tag: image.tag,
+      lables: image.labels,
       createdAt: image.createdAt,
       updatedAt: image.updatedAt,
     };
@@ -62,6 +65,13 @@ function Home(props) {
 
   const downloadImage = async (src) => {
     console.log("src", src);
+    // const signedURL = await Storage.get(key);
+    // console.log("signedURL", signedURL);
+    // <a href={signedURL} target="_blank">{fileName}</a>
+
+    // inside your template or JSX code. Note <a download> doesn't work here because it is not same origin
+    // <a href={signedURL} target="_blank">{fileName}</a>
+
     // const response = await API.graphql(
     //   graphqlOperation(getPicture, { id: id })
     // );
@@ -74,13 +84,49 @@ function Home(props) {
     //console.log("signeddd url", response.data.getPicture.file);
   };
 
+  const searchImage = async (searchLabel) => {
+    var result;
+    console.log("searchLabel", searchLabel);
+
+    // when no search filter is passed, revert back to full list
+    if (searchLabel.label == "") {
+      await getAllImagesToState();
+    } else {
+      const filter = {
+        labels: {
+          match: {
+            labels: searchLabel,
+          },
+        },
+      };
+      result = await API.graphql(
+        graphqlOperation(searchPictures, { filter: filter })
+      );
+
+      if (result.data.searchPictures.items.length > 0) {
+        let imageArray = await buildImageArray(
+          result.data.searchPictures.items
+        );
+        console.log(" imageArray", imageArray);
+        setImages(imageArray);
+      } else {
+        alert(" Sorry! nothing matches your search");
+      }
+    }
+  };
+
   return (
     <div>
+      <div className="row d-flex justify-content-center">
+        <SearchImage searchImage={searchImage} />
+      </div>
+
       {myAlert ? (
         <div id="success-alert" className="alert alert-danger" role="alert">
           image deleted successfully!!!
         </div>
       ) : null}
+      <br />
 
       <ImageGallery
         images={images}

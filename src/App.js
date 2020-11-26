@@ -5,12 +5,14 @@ import "./App.css";
 import Amplify, { Auth, Hub } from "aws-amplify";
 import { AmplifyAuthenticator } from "@aws-amplify/ui-react";
 import awsExports from "./aws-exports";
+import { AmazonAIPredictionsProvider } from "@aws-amplify/predictions";
 
 //components imports
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 
 Amplify.configure(awsExports);
+Amplify.addPluggable(new AmazonAIPredictionsProvider());
 
 function App() {
   const [user, setUser] = useState("");
