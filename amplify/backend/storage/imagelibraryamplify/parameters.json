@@ -31,5 +31,6 @@
     "s3PermissionsGuestPublic": "DISALLOW",
     "s3PermissionsGuestUploads": "DISALLOW",
     "GuestAllowList": "DISALLOW",
-    "triggerFunction": "NONE"
+    "triggerFunction": "NONE",
+    "adminTriggerFunction": "RekognitionIndexFacesTriggerd173e0e5"
 }

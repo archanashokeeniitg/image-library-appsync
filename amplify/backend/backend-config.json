@@ -10,7 +10,18 @@
   "storage": {
     "imagelibraryamplify": {
       "service": "S3",
-      "providerPlugin": "awscloudformation"
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "RekognitionIndexFacesTriggerd173e0e5",
+          "attributes": [
+            "Name",
+            "Arn",
+            "LambdaExecutionRole"
+          ]
+        }
+      ]
     }
   },
   "api": {
@@ -46,6 +57,36 @@
       "service": "Rekognition",
       "dependsOn": [],
       "identifyType": "identifyLabels"
+    },
+    "faceIndexEntities": {
+      "providerPlugin": "awscloudformation",
+      "service": "Rekognition",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "RekognitionIndexFacesTriggerd173e0e5",
+          "attributes": [
+            "Name",
+            "Arn",
+            "LambdaExecutionRole"
+          ]
+        },
+        {
+          "category": "storage",
+          "resourceName": "imagelibraryamplify",
+          "attributes": [
+            "BucketName"
+          ]
+        }
+      ],
+      "identifyType": "identifyEntities"
+    }
+  },
+  "function": {
+    "RekognitionIndexFacesTriggerd173e0e5": {
+      "service": "Lambda",
+      "providerPlugin": "awscloudformation",
+      "build": true
     }
   }
 }

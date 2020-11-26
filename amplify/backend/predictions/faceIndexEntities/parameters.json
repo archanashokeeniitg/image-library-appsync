@@ -1,0 +1,18 @@
+{
+    "resourceName": "faceIndexEntities",
+    "identifyPolicyName": "identifyPolicy6c86c281",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "adminAuthProtected": "ALLOW",
+    "adminGuestProtected": "DISALLOW",
+    "identifyType": "identifyEntities",
+    "celebrityDetectionEnabled": true,
+    "adminTask": true,
+    "maxEntities": 100,
+    "folderPolicies": "app",
+    "access": "auth"
+}
