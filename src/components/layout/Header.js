@@ -3,7 +3,7 @@ import React from "react";
 //components
 import Home from "../Home";
 import Upload from "../Upload";
-import Albums from "../Albums";
+import Album from "../Album";
 import Find from "../FindImage";
 
 import { Router, Route } from "react-router-dom";
@@ -33,7 +33,7 @@ const Header = (props) => {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="text-white" href="/Albums">
+              <NavLink className="text-white" href="/Album">
                 Albums
               </NavLink>
             </NavItem>
@@ -52,6 +52,7 @@ const Header = (props) => {
         </Navbar>
         <Route path="/" exact component={Home} />
         <Route path="/upload" exact component={Upload} />
+        <Route path="/Album" exact component={Album} />
         <Route path="/FindImage" exact component={Find} />
       </Router>
     </div>

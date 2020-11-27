@@ -92,7 +92,7 @@ function ImageGallery(props) {
                   <CardText className="img-label">
                     <b>Labels using Rekognition</b>
                     <br />
-                    {image.lables.join(", ")}
+                    {image.lables ? image.lables.join(", ") : ""}
                   </CardText>
                 </div>
               </div>
