@@ -1,13 +1,64 @@
 import React, { useState, useEffect } from "react";
-import { Storage, API, graphqlOperation } from "aws-amplify";
+import { Storage, API, graphqlOperation, label } from "aws-amplify";
 import { createPicture } from "../graphql/mutations";
+import Predictions from "@aws-amplify/predictions";
 import awsExports from "../aws-exports";
 import "./Upload.css";
 function Upload(props) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [alert, setAlert] = useState(false);
   const [tag, setTag] = useState("");
+  const [labels, setLabels] = useState([]);
+  const [celeb, setCeleb] = useState([]);
 
+  const findImageLabels = async (file) => {
+    console.log("inside Label");
+    return Predictions.identify({
+      labels: {
+        source: {
+          file,
+        },
+        type: "LABELS",
+      },
+    })
+      .then((response) => {
+        console.log("lables 1", response);
+        let labels = response.labels.map((label) => {
+          if (label.metadata.confidence > 70) return label.name;
+        });
+        console.log("lables are", labels);
+        console.log("inside 3", labels.filter(Boolean));
+        return labels.filter(Boolean);
+      })
+
+      .catch((err) => console.log({ err }));
+  };
+
+  const celebritySearch = async (file) => {
+      console.log("Inside celeb");
+      return Predictions.identify({
+        entities: {
+          source: {
+            file,
+          },
+          celebrityDetection: true // boolean. It will only show detected celebrities 
+        }
+      })
+      .then(({ response }) => {
+        response.entities.forEach(({ boundingBox, landmarks, metadata }) => {
+          const { 
+              name,
+              urls 
+          } = metadata; // celebrity info
+          let celeb = response.entities.map((label) => {
+            if (celeb.metadata.confidence > 70) return celeb.name;
+          });
+          return celeb.filter(Boolean);
+        })
+      })
+      .catch(err => console.log({ err }));
+  };
+  
   const sendImageToDB = async (image) => {
     console.log("inside db write", image);
     try {
@@ -27,24 +78,33 @@ function Upload(props) {
     e.preventDefault();
     console.log("{tag}", { tag });
     console.log("{selectedFile}", selectedFile);
+
     //storing image in S3
     Storage.put(selectedFile.name, selectedFile, {
       contentType: "image/png",
     }).then((result) => {
-      //this.selectedFileState({ file: URL.createObjectURL(selectedFile) });
-      //console.log("srccccc", this.selectedFile);
-      const image = {
-        name: selectedFile.name,
-        tag: tag,
-        file: {
-          bucket: awsExports.aws_user_files_s3_bucket,
-          region: awsExports.aws_user_files_s3_bucket_region,
-          key: selectedFile.name,
-        },
-      };
-      console.log("image payload", image);
-      setAlert(true);
-      sendImageToDB(image);
+      findImageLabels(selectedFile).then((labels) => {
+        console.log("m returnddd", labels);
+        setLabels(labels);
+
+        // this.selectedFileState({ file: URL.createObjectURL(selectedFile) });
+
+        //this.selectedFileState({ file: URL.createObjectURL(selectedFile) });
+        //console.log("srccccc", this.selectedFile);
+        const image = {
+          name: selectedFile.name,
+          tag: tag,
+          labels: labels,
+          file: {
+            bucket: awsExports.aws_user_files_s3_bucket,
+            region: awsExports.aws_user_files_s3_bucket_region,
+            key: selectedFile.name,
+          },
+        };
+        console.log("image payload", image);
+        setAlert(true);
+        sendImageToDB(image);
+      });
     });
   };
 
@@ -52,7 +112,7 @@ function Upload(props) {
     <div className="container">
       {alert ? (
         <div className="alert alert-success" role="alert">
-          image sucessfully uploaded!!!
+          Image Sucessfully Uploaded!!!
         </div>
       ) : null}
       <form className="jumbotron" onSubmit={handleChange}>
