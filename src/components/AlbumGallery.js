@@ -43,7 +43,7 @@ function AlbumGallery(props) {
             <div>
                 <CardImg
                     className=""
-                    src={image.url}
+                    src={image.src}
                     alt="Smiley face"
                     width="300"
                     height="400"

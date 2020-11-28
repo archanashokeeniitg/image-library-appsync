@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ImageGallery from "./AlbumGallery";
+import AlbumGallery from "./AlbumGallery";
 import SearchImage from "./SearchImage";
 import { Storage, API, graphqlOperation } from "aws-amplify";
 import { listPictures, getPicture, searchPictures } from "../graphql/queries";
@@ -9,10 +9,14 @@ import Lightbox from "react-awesome-lightbox";
 // You need to import the CSS only once
 import "react-awesome-lightbox/build/style.css";
 
+import ReactBnbGallery from 'react-bnb-gallery';
+import 'react-bnb-gallery/dist/style.css'
+
 function Album(props) {
   const [images, setImages] = useState([]);
   const [picture] = useState("");
   const [myAlert, setMyAlert] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   // const [searchTag, setSearchTag] = useState("");
 
   useEffect(() => {
@@ -38,13 +42,10 @@ function Album(props) {
   const getOneFormatedImage = async (image) => {
     console.log("getOneFormatedImage", image);
     return {
-      url: await Storage.get(image.file.key),
-      id: image.id,
-      owner: image.owner,
-      title: image.tag,
-      lables: image.labels,
-      createdAt: image.createdAt,
-      updatedAt: image.updatedAt,
+      photo: await Storage.get(image.file.key),
+      number: image.id,
+      caption: image.tag,
+      subcaption: image.labels,
     };
   };
 
@@ -53,7 +54,7 @@ function Album(props) {
     console.log("searchLabel", searchLabel);
 
     // when no search filter is passed, revert back to full list
-    if (searchLabel.title == "") {
+    if (searchLabel.title === "") {
       await getAllImagesToState();
     } else {
       const filter = {
@@ -71,7 +72,7 @@ function Album(props) {
         let imageArray = await buildImageArray(
           result.data.searchPictures.items
         );
-        console.log(" imageArray", imageArray);
+        console.log("imageArray", imageArray);
         setImages(imageArray);
       } else {
         alert(" Sorry! nothing matches your search");
@@ -84,12 +85,15 @@ function Album(props) {
   return (
     <div>
       <div className="row d-flex justify-content-center">
-        <SearchImage searchImage={searchImage} />
+        <button onClick={() => setIsOpen(true)}>
+          Open gallery
+        </button>
+        <ReactBnbGallery
+          show={isOpen}
+          photos={images}
+          onClose={() => setIsOpen(false)}
+        />
       </div>
-
-      <Lightbox
-        images={images}
-      />
     </div>
   );
 }
