@@ -15,7 +15,7 @@ const SearchImage = (props) => {
           type="text"
           value={searchImage}
           onChange={({ target }) => setSearchImage(target.value)}
-          placeholder="search Here..."
+          placeholder="Search Here..."
         />
         <br />
         <button className="btn btn-primary" type="submit">
