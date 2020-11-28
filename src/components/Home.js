@@ -148,7 +148,7 @@ function Home(props) {
 
       {myAlert ? (
         <div id="success-alert" className="alert alert-danger" role="alert">
-          image deleted successfully!!!
+          Image Deleted successfully!!!
         </div>
       ) : null}
       <br />

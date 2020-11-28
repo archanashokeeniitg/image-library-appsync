@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
-import AlbumGallery from "./AlbumGallery";
+import ImageGallery from "./AlbumGallery";
 import SearchImage from "./SearchImage";
 import { Storage, API, graphqlOperation } from "aws-amplify";
 import { listPictures, getPicture, searchPictures } from "../graphql/queries";
 import { updatePicture, deletePicture } from "../graphql/mutations";
 
+import Lightbox from "react-awesome-lightbox";
+// You need to import the CSS only once
+import "react-awesome-lightbox/build/style.css";
+
 function Album(props) {
   const [images, setImages] = useState([]);
   const [picture] = useState("");
   const [myAlert, setMyAlert] = useState(false);
+  // const [searchTag, setSearchTag] = useState("");
 
   useEffect(() => {
     getAllImagesToState();
@@ -33,29 +38,28 @@ function Album(props) {
   const getOneFormatedImage = async (image) => {
     console.log("getOneFormatedImage", image);
     return {
-      src: await Storage.get(image.file.key),
+      url: await Storage.get(image.file.key),
       id: image.id,
       owner: image.owner,
-      tag: image.tag,
+      title: image.tag,
       lables: image.labels,
-      celeb: image.celeb,
       createdAt: image.createdAt,
       updatedAt: image.updatedAt,
     };
   };
 
-  const searchImage = async (searchTag) => {
+  const searchImage = async (searchLabel) => {
     var result;
-    console.log("searchTag", searchTag);
+    console.log("searchLabel", searchLabel);
 
     // when no search filter is passed, revert back to full list
-    if (searchTag.tag == "") {
+    if (searchLabel.title == "") {
       await getAllImagesToState();
     } else {
       const filter = {
-        tag: {
+        title: {
           match: {
-            tag: searchTag,
+            title: searchLabel,
           },
         },
       };
@@ -75,13 +79,15 @@ function Album(props) {
     }
   };
 
+  console.log(images)
+
   return (
     <div>
       <div className="row d-flex justify-content-center">
         <SearchImage searchImage={searchImage} />
       </div>
 
-      <AlbumGallery
+      <Lightbox
         images={images}
       />
     </div>

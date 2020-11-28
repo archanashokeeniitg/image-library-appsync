@@ -6,7 +6,7 @@ import { updatePicture } from "../graphql/mutations";
 import awsExports from "../aws-exports";
 import "./Home.css";
 
-function Album(props) {
+function AlbumGallery(props) {
   const [editedTag, setEditedTag] = useState("");
   const [imageID, setImageID] = useState("");
   const [toggle, setToggle] = useState(false);
@@ -43,7 +43,7 @@ function Album(props) {
             <div>
                 <CardImg
                     className=""
-                    src={image.src}
+                    src={image.url}
                     alt="Smiley face"
                     width="300"
                     height="400"
@@ -56,4 +56,4 @@ function Album(props) {
   );
 }
 
-export default Album;
+export default AlbumGallery;
