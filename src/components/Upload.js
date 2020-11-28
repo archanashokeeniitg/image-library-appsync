@@ -58,36 +58,7 @@ function Upload(props) {
       })
       .catch(err => console.log({ err }));
   };
-
-  const faceRec = async (file) => {
-      console.log("Inside FaceRec");
-      return Predictions.identify({
-        entities: {
-          source: {
-            file,
-          },
-        }
-      })
-      .then(({ entities }) => {
-        entities.forEach(({boundingBox, landmarks}) => {
-          const { 
-            width, // ratio of overall image width
-            height, // ratio of overall image height
-            left, // left coordinate as a ratio of overall image width
-            top // top coordinate as a ratio of overall image height
-          } = boundingBox;
-          landmarks.forEach(landmark => {
-              const {
-                  type, // string "eyeLeft", "eyeRight", "mouthLeft", "mouthRight", "nose"
-                  x, // ratio of overall image width
-                  y // ratio of overall image height
-              } = landmark;
-          })
-        })
-      })
-      .catch(err => console.log({ err }));
-  }
-
+  
   const sendImageToDB = async (image) => {
     console.log("inside db write", image);
     try {
