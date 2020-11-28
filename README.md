@@ -6,6 +6,7 @@
 * [Modules](#modules)
 * [Feature List](#feature-list)
 * [Technologies](#technologies)
+* [Contributors](#contributors)
 * [Status](#status)
 
 ## General info
@@ -23,7 +24,7 @@ Finally, the application is hosted on Amplify which is complemented by Route53 f
 
 During the development process, code was hosted on GitHub for CI/CD purposes with regular commits. In the beginning, we cloned from a central repository branch and developed our components, and then merged them back into a central repository branch which we hosted on AWS Amplify.
 
-## feature-List
+## Feature-List
 
 * AWS Amplify Hosting
 * DynamoDB Tables
@@ -40,5 +41,12 @@ During the development process, code was hosted on GitHub for CI/CD purposes wit
 
 ## Technologies
 * React and AWS Amplify
+
+## Contributors
+
+| Archana Shokeen(015237378) | https://github.com/archanashokeeniitg/image-library-appsync/tree/phase2 |
+|----------------------------|-------------------------------------------------------------------------|
+| Eric Cheng(015300506)      | https://github.com/eccx400/image_gallery                                |
+| Hung Le(010306088)         | https://github.com/HungVLe/image-library-appsync                        |
 ## Status
 Project is: _Completed_
