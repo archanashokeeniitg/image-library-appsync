@@ -3,6 +3,8 @@ import React from "react";
 //components
 import Home from "../Home";
 import Upload from "../Upload";
+import Album from "../Album";
+import Find from "../FindImage";
 
 import { Router, Route } from "react-router-dom";
 import { createBrowserHistory as createHistory } from "history";
@@ -17,7 +19,7 @@ const Header = (props) => {
       <Router history={history}>
         <Navbar color="dark">
           <NavbarBrand href="/" className="text-white">
-            Image Gallery
+            Smart Gallery
           </NavbarBrand>
           <Nav>
             <NavItem>
@@ -30,8 +32,18 @@ const Header = (props) => {
                 upload Image
               </NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink className="text-white" href="/album">
+                Albums
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className="text-white" href="/findimage">
+                Image Search By Web
+              </NavLink>
+            </NavItem>
           </Nav>
-          <NavItem className="text-white " style={{ paddingLeft: "40%" }}>
+          <NavItem className="text-white " style={{ paddingLeft: "20%" }}>
             <i className="fa fa-user " aria-hidden="true"></i>
             &nbsp;
             {props.user.username} &nbsp;
@@ -40,6 +52,8 @@ const Header = (props) => {
         </Navbar>
         <Route path="/" exact component={Home} />
         <Route path="/upload" exact component={Upload} />
+        <Route path="/album" exact component={Album} />
+        <Route path="/findimage" exact component={Find} />
       </Router>
     </div>
   );
