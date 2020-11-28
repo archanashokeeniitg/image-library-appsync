@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+# Smart Gallery
+> Link can be found at <a href= https://www.imagegallery.cf/ > this link</a>. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of contents
+* [General info](#general-info)
+* [Modules](#modules)
+* [Feature List](#feature-list)
+* [Technologies](#technologies)
+* [Status](#status)
 
-## Available Scripts
+## General info
+Smart Gallery uses multiple new technologies to ensure that the users have better control and access to their images. From the architectural diagram above, the application is written in React and hosted on AWS Amplify using graphql. The schema has templates for the image object and its information which are stored in both AWS S3 bucket and DynamoDB respectively.
 
-In the project directory, you can run:
+## Modules
 
-### `yarn start`
+Authentication is essential and a core area of our application development. With AWS Amplify, we have authentication using username and password, in addition to email and SMS notifications for registration so that only authorized users can access their application. Images uploaded to the bucket are segregated by username using IAM users, so that only the users that uploaded the image can see their images in the application, while those with Admin roles can view all the images in the S3 bucket. Images can also be downloaded locally or deleted from the S3 bucket directly from the application in the browser.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Smart Labeling using Amazon Rekognition is implemented as functionalities of the project. Since we aim to build a platform like Google Photos for image storage, the labels will be used to search and sort the images. The labels will be linked to the react app using graphql and will be stored in the DynamoDB database. Thus, when a user uploads an image, they can also add labels which can be used to identify similar images in the gallery, which are improved in retrieval performance using  Cloudfront CDN, built into Amplify and Route53.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The uploaded images can also be viewed in Album mode, which presents the images in a nice scrolling gallery mode, where images can be rotated and zoomed in. There is also a provided image search using Unsplash API which allows users to search for new images to download and upload to the S3 bucket.
 
-### `yarn test`
+Finally, the application is hosted on Amplify which is complemented by Route53 for custom domain, so that anyone with the URL can access the application.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+During the development process, code was hosted on GitHub for CI/CD purposes with regular commits. In the beginning, we cloned from a central repository branch and developed our components, and then merged them back into a central repository branch which we hosted on AWS Amplify.
 
-### `yarn build`
+## feature-List
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* AWS Amplify Hosting
+* DynamoDB Tables
+* Appsync API with GraphQL
+* AWS Rekognition
+    * Smart Labeling
+    * AWS Polly
+* Wider image search using Unsplash API
+* Amplify Authentication with Cognito
+* Cloudfront CDN 
+* Autoscaling
+* Multi-AZ Redundancy
+* S3 Lifecycle Policy
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Technologies
+* React and AWS Amplify
+## Status
+Project is: _Completed_

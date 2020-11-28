@@ -4,8 +4,17 @@ type S3Object {
   key: String!
 }
 
+type Album 
+@model 
+@auth(rules: [{allow: owner}]) {
+    id: ID!
+    name: String!
+    pictures: [Picture] @connection(keyName: "byAlbum", fields: ["id"])
+}
+
 type Picture
   @model
+  @key(name: "byAlbum", fields: ["albumId"], queryField: "listPhotosByAlbum")
   @auth(
     rules: [
       {
@@ -23,6 +32,8 @@ type Picture
   )
   @searchable {
   id: ID!
+  albumId: ID!
+  album: Album @connection(fields: ["albumId"])
   name: String
   owner: String
   tag: String

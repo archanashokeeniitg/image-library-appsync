@@ -45,7 +45,6 @@ function Album(props) {
       photo: await Storage.get(image.file.key),
       number: image.id,
       caption: image.tag,
-      subcaption: image.labels,
     };
   };
 
@@ -85,7 +84,7 @@ function Album(props) {
   return (
     <div>
       <div className="row d-flex justify-content-center">
-        <button onClick={() => setIsOpen(true)}>
+        <button className="btn btn-primary" type="submit" onClick={() => setIsOpen(true)}>
           Open gallery
         </button>
         <ReactBnbGallery
