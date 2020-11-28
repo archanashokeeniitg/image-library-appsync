@@ -41,6 +41,7 @@ function Home(props) {
       lables: image.labels,
       createdAt: image.createdAt,
       updatedAt: image.updatedAt,
+      key: image.file.key,
     };
   };
 
@@ -63,26 +64,27 @@ function Home(props) {
     }
   };
 
-  const downloadImage = async (src) => {
-    console.log("src", src);
-    // const signedURL = await Storage.get(key);
-    // console.log("signedURL", signedURL);
-    // <a href={signedURL} target="_blank">{fileName}</a>
-
-    // inside your template or JSX code. Note <a download> doesn't work here because it is not same origin
-    // <a href={signedURL} target="_blank">{fileName}</a>
-
-    // const response = await API.graphql(
-    //   graphqlOperation(getPicture, { id: id })
-    // );
-    // const signedURL = await Storage.get(formData.image);
-    // formData.image = signedURL;
-
-    // console.log("id download", id);
-    // const signedURL = await Storage.get();
-    // console.log("signed Url", signedURL);
-    //console.log("signeddd url", response.data.getPicture.file);
+  const downloadImage = async (image) => {
+    console.log("image", image);
+    const data = await Storage.get(image.key, { download: true })
+    .then(res => downloadBlob(res.Body, image.key))
   };
+
+  function downloadBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename || 'download';
+    const clickHandler = () => {
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+        a.removeEventListener('click', clickHandler);
+      }, 150);
+    };
+    a.addEventListener('click', clickHandler, false);
+    a.click();
+    return a;
+  }
 
   const searchImage = async (searchLabel) => {
     var result;

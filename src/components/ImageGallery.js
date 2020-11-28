@@ -51,8 +51,10 @@ function ImageGallery(props) {
                 ></i>
                 <a
                   style={{ textDecoration: "none", color: "inherit" }}
-                  href={image.src}
                   download="download.png"
+                  onClick={(event) => {
+                    props.downloadImage(image)
+                  }}
                 >
                   <i className="fa fa-download "></i>
                 </a>
