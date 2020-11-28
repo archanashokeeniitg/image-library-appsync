@@ -3,7 +3,7 @@ import ImageGallery from "./ImageGallery";
 import SearchImage from "./SearchImage";
 import { Storage, API, graphqlOperation } from "aws-amplify";
 import { listPictures, getPicture, searchPictures } from "../graphql/queries";
-import { deletePicture } from "../graphql/mutations";
+import { updatePicture, deletePicture } from "../graphql/mutations";
 
 function Home(props) {
   const [images, setImages] = useState([]);
@@ -84,6 +84,30 @@ function Home(props) {
       // console.log("signed Url", signedURL);
       //console.log("signeddd url", response.data.getPicture.file);
   };
+
+  const manualLabels = async (imageId, tagValue) => {
+    const image = images.filter((value, index, arr) => {
+      return value.id === imageId;
+    });
+
+    let labels = image[0].labels;
+    labels.push(tagValue);
+
+    const input = {
+      id: imageId,
+      labels: labels,
+    };
+
+    try {
+      await API.graphql(graphqlOperation(updatePicture, { input: input }));
+
+      //Then I need to refresh the state with the new tag
+      await getAllImagesToState();
+    } catch (error) {
+      console.log(error);
+      alert("Cannot edit: Authentication Failed");
+    }
+  }
 
   const searchImage = async (searchLabel) => {
     var result;
