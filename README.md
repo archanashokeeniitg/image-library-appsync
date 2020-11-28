@@ -24,7 +24,7 @@ Finally, the application is hosted on Amplify which is complemented by Route53 f
 
 During the development process, code was hosted on GitHub for CI/CD purposes with regular commits. In the beginning, we cloned from a central repository branch and developed our components, and then merged them back into a central repository branch which we hosted on AWS Amplify.
 
-## Feature-List
+## Feature List
 
 * AWS Amplify Hosting
 * DynamoDB Tables
