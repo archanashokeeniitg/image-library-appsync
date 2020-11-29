@@ -4,7 +4,8 @@ import { Card, CardImg, Row, Col, CardText } from "reactstrap";
 import { API, graphqlOperation, label } from "aws-amplify";
 import { updatePicture } from "../graphql/mutations";
 import awsExports from "../aws-exports";
-import "./Home.css";
+import "./Home.css"
+import "./FindImage.css";
 
 function ImageGallery(props) {
   const [editedTag, setEditedTag] = useState("");
@@ -35,73 +36,24 @@ function ImageGallery(props) {
 
   // class ImageGallery extends Component {
 
-  return (
-    <div className="container">
-      <Row>
-        {props.images.map((image) => (
-          <Col key={image.id}>
-            <Card className=" jumbotron ">
-              <div>
-                <i
-                  className="fa fa-trash pull-left "
-                  aria-hidden="true"
-                  onClick={(event) => {
-                    props.deleteImage(image.id);
-                  }}
-                ></i>
-                <a
-                  style={{ textDecoration: "none", color: "inherit" }}
-                  href={image.src}
-                  download="download.png"
-                >
-                  <i className="fa fa-download "></i>
-                </a>
-                <i
-                  className="fa fa-edit pull-right "
-                  onClick={(event) => {
-                    setImageID(image.id);
-                    setToggle(true);
-                  }}
-                ></i>
 
-                <CardImg
-                  className=""
-                  src={image.src}
-                  alt="Smiley face"
-                  width="100"
-                  height="200"
-                />
-                <br />
-                <div className="align-items-start">
-                  <CardText>owner : {image.owner}</CardText>
-
-                  {toggle ? (
-                    <input
-                      type="text"
-                      defaultValue={image.tag}
-                      onChange={(e) =>
-                        handleOnTagChange(e.target.value, image.id)
-                      }
-                    />
-                  ) : (
-                    <CardText> Tag : {image.tag}</CardText>
-                  )}
-
-                  <CardText> Dated: {image.updatedAt.toString()}</CardText>
-
-                  <CardText className="img-label">
-                    <b>Labels using Rekognition</b>
-                    <br />
-                    {image.lables ? image.lables.join(", ") : ""} 
-                  </CardText>
-                </div>
-              </div>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+return (
+  <>
+    <div className="card-list">
+      {
+        props.images.map((image) =>
+          <div className="card" key={image.id}>
+            <img
+              className="card-image"
+              alt="Happy Face"
+              src={image.src}
+              width="100%"
+              height="100%"
+            ></img>
+          </div>)}
     </div>
-  );
+  </>
+);
 }
 
 export default ImageGallery;

@@ -114,13 +114,13 @@ function Home(props) {
     console.log("searchLabel", searchLabel);
 
     // when no search filter is passed, revert back to full list
-    if (searchLabel.label == "") {
+    if (searchLabel.tag === "") {
       await getAllImagesToState();
     } else {
       const filter = {
-        labels: {
+        tag: {
           match: {
-            labels: searchLabel,
+            tag: searchLabel,
           },
         },
       };
