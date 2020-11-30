@@ -39,11 +39,11 @@ const Header = (props) => {
             </NavItem>
             <NavItem>
               <NavLink className="text-white" href="/FindImage">
-                Image Search
+                Image Search by UnSplash
               </NavLink>
             </NavItem>
           </Nav>
-          <NavItem className="text-white " style={{ paddingLeft: "40%" }}>
+          <NavItem className="text-white " style={{ paddingLeft: "60%" }}>
             <i className="fa fa-user " aria-hidden="true"></i>
             &nbsp;
             {props.user.username} &nbsp;

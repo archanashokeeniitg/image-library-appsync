@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { Card, CardImg, Row, Col, CardText } from "reactstrap";
+import {Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button } from "reactstrap";
 
 import { API, graphqlOperation, label } from "aws-amplify";
 import { updatePicture } from "../graphql/mutations";
@@ -43,13 +43,40 @@ return (
       {
         props.images.map((image) =>
           <div className="card" key={image.id}>
-            <img
-              className="card-image"
-              alt="Happy Face"
-              src={image.src}
-              width="100%"
-              height="100%"
-            ></img>
+            <Card>
+              <CardImg 
+                  top width="100%"
+                  className="card-image"
+                  alt="Happy Face"
+                  src={image.src}
+              ></CardImg> 
+              <CardBody>
+                <CardTitle tag="h6">Owner : {image.owner}</CardTitle>
+                <CardTitle tag="h6">
+                  <i
+                    className="fa fa-trash pull-left "
+                    aria-hidden="true"
+                    onClick={(event) => {
+                      props.deleteImage(image.id);
+                    }}
+                  ></i>
+                  <a
+                    style={{ textDecoration: "none", color: "inherit" }}
+                    href={image.src}
+                    download="download.png"
+                  >
+                    <i className="fa fa-download "></i>
+                  </a>
+                  <i
+                    className="fa fa-edit pull-right "
+                    onClick={(event) => {
+                      setImageID(image.id);
+                      setToggle(true);
+                    }}
+                  ></i>
+                </CardTitle>
+              </CardBody>
+            </Card>
           </div>)}
     </div>
   </>
