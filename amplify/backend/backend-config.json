@@ -1,51 +1,51 @@
 {
-  "auth": {
-    "imagelibraryamplify5f7e6dc5": {
-      "service": "Cognito",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "customAuth": false
-    }
-  },
-  "storage": {
-    "imagelibraryamplify": {
-      "service": "S3",
-      "providerPlugin": "awscloudformation"
-    }
-  },
-  "api": {
-    "imagelibraryamplify": {
-      "service": "AppSync",
-      "providerPlugin": "awscloudformation",
-      "output": {
-        "authConfig": {
-          "defaultAuthentication": {
-            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-            "userPoolConfig": {
-              "userPoolId": "authimagelibraryamplify5f7e6dc5"
-            }
-          },
-          "additionalAuthenticationProviders": []
+    "auth": {
+        "imagelibraryamplify5f7e6dc5": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": [],
+            "customAuth": false
         }
-      }
-    }
-  },
-  "hosting": {
-    "amplifyhosting": {
-      "service": "amplifyhosting",
-      "type": "cicd"
     },
-    "S3AndCloudFront": {
-      "service": "S3AndCloudFront",
-      "providerPlugin": "awscloudformation"
+    "storage": {
+        "imagelibraryamplify": {
+            "service": "S3",
+            "providerPlugin": "awscloudformation"
+        }
+    },
+    "api": {
+        "imagelibraryamplify": {
+            "service": "AppSync",
+            "providerPlugin": "awscloudformation",
+            "output": {
+                "authConfig": {
+                    "defaultAuthentication": {
+                        "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+                        "userPoolConfig": {
+                            "userPoolId": "authimagelibraryamplify5f7e6dc5"
+                        }
+                    },
+                    "additionalAuthenticationProviders": []
+                }
+            }
+        }
+    },
+    "hosting": {
+        "amplifyhosting": {
+            "service": "amplifyhosting",
+            "type": "cicd"
+        },
+        "S3AndCloudFront": {
+            "service": "S3AndCloudFront",
+            "providerPlugin": "awscloudformation"
+        }
+    },
+    "predictions": {
+        "identifyLabelsImageGalleryAmplify": {
+            "providerPlugin": "awscloudformation",
+            "service": "Rekognition",
+            "dependsOn": [],
+            "identifyType": "identifyLabels"
+        }
     }
-  },
-  "predictions": {
-    "identifyLabelsImageGalleryAmplify": {
-      "providerPlugin": "awscloudformation",
-      "service": "Rekognition",
-      "dependsOn": [],
-      "identifyType": "identifyLabels"
-    }
-  }
 }
