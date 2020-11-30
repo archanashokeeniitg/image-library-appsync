@@ -53,7 +53,7 @@ const Header = (props) => {
               </NavLink>
             </NavItem>
           </Nav>
-          <NavItem className="text-white " style={{ paddingLeft: "20%" }}>
+          <NavItem className="text-white ">
             <i className="fa fa-user " aria-hidden="true"></i>
             &nbsp;
             {props.user.username} &nbsp;
@@ -61,6 +61,7 @@ const Header = (props) => {
           <AmplifySignOut />
         </Navbar>
         <Route path="/" exact component={Home} />
+        <Route path="/login" component={Home} />
         <Route path="/upload" exact component={Upload} />
         <Route path="/album" exact component={Album} />
         <Route path="/findimage" exact component={Find} />
