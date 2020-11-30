@@ -11,6 +11,7 @@ import {
 
 import { API, graphqlOperation, label } from "aws-amplify";
 import { updatePicture } from "../graphql/mutations";
+
 import awsExports from "../aws-exports";
 import "./Home.css";
 import "./FindImage.css";

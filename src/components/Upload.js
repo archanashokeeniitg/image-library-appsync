@@ -83,11 +83,6 @@ function Upload(props) {
       findImageLabels(selectedFile).then((labels) => {
         console.log("m returnddd", labels);
         setLabels(labels);
-
-        // this.selectedFileState({ file: URL.createObjectURL(selectedFile) });
-
-        //this.selectedFileState({ file: URL.createObjectURL(selectedFile) });
-        //console.log("srccccc", this.selectedFile);
         const image = {
           name: selectedFile.name,
           tag: tag,

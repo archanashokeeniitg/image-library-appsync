@@ -39,7 +39,7 @@ const Header = (props) => {
             </NavItem>
             <NavItem>
               <NavLink className="text-white" href="/FindImage">
-                Image Search
+                Image Search By Web
               </NavLink>
             </NavItem>
           </Nav>

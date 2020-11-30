@@ -43,6 +43,37 @@ function Album(props) {
     };
   };
 
+  const searchImage = async (searchLabel) => {
+    var result;
+    console.log("searchLabel", searchLabel);
+
+    // when no search filter is passed, revert back to full list
+    if (searchLabel.title === "") {
+      await getAllImagesToState();
+    } else {
+      const filter = {
+        title: {
+          match: {
+            title: searchLabel,
+          },
+        },
+      };
+      result = await API.graphql(
+        graphqlOperation(searchPictures, { filter: filter })
+      );
+
+      if (result.data.searchPictures.items.length > 0) {
+        let imageArray = await buildImageArray(
+          result.data.searchPictures.items
+        );
+        console.log("imageArray", imageArray);
+        setImages(imageArray);
+      } else {
+        alert(" Sorry! nothing matches your search");
+      }
+    }
+  };
+
   console.log(images);
 
   return (

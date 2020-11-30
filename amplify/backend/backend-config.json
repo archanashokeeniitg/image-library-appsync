@@ -37,7 +37,7 @@
     }
   },
   "predictions": {
-    "identifyLabelsc7b9e5ea": {
+    "identifyLabelsImageGalleryAmplify": {
       "providerPlugin": "awscloudformation",
       "service": "Rekognition",
       "dependsOn": [],

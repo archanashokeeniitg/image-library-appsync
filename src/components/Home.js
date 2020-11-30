@@ -89,6 +89,7 @@ function Home(props) {
     return a;
   }
 
+
   const manualLabels = async (imageId, tagValue) => {
     const image = images.filter((value, index, arr) => {
       return value.id === imageId;
