@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from "react";
-import ImageGallery from "./ImageGallery";
-import SearchImage from "./SearchImage";
 import { Storage, API, graphqlOperation } from "aws-amplify";
 import { listPictures, getPicture, searchPictures } from "../graphql/queries";
 import { updatePicture, deletePicture } from "../graphql/mutations";
 
-function Home(props) {
+//components
+import Home from "../../Home";
+import Upload from "../../Upload";
+import Album from "../../Album";
+import Find from "../../FindImage";
+import SearchImage from "../SearchImage";
+
+import { Router, Route } from "react-router-dom";
+import { createBrowserHistory as createHistory } from "history";
+import { AmplifySignOut } from "@aws-amplify/ui-react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from "reactstrap";
+const history = createHistory();
+
+const HomeNav = (props) => {
   const [images, setImages] = useState([]);
   const [picture] = useState("");
   const [myAlert, setMyAlert] = useState(false);
@@ -31,7 +43,7 @@ function Home(props) {
       })
     );
   };
-  
+
   const getOneFormatedImage = async (image) => {
     console.log("getOneFormatedImage", image);
     return {
@@ -142,27 +154,53 @@ function Home(props) {
       }
     }
   };
-
+  
   return (
     <div>
-      <div className="row d-flex justify-content-center">
-        <SearchImage searchImage={searchImage} />
-      </div>
-
-      {myAlert ? (
-        <div id="success-alert" className="alert alert-danger" role="alert">
-          Image Deleted successfully!!!
-        </div>
-      ) : null}
-      <br />
-
-      <ImageGallery
-        images={images}
-        deleteImage={deleteImage}
-        downloadImage={downloadImage}
-      />
+      <Router history={history}>
+        <Navbar color="dark">
+          <NavbarBrand href="/" className="text-white">
+            Smart Gallery
+          </NavbarBrand>
+          <Nav>
+            <NavItem>
+              <NavLink className="text-white" href="/">
+                Home
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className="text-white" href="/upload">
+                Upload Image
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className="text-white" href="/Album">
+                Albums
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className="text-white" href="/FindImage">
+                Image Search
+              </NavLink>
+            </NavItem>
+            <NavItem>
+                <SearchImage searchImage={searchImage} />
+            </NavItem>
+          </Nav>
+          <NavItem className="text-white " style={{ paddingLeft: "40%" }}>
+            <i className="fa fa-user " aria-hidden="true"></i>
+            &nbsp;
+            {props.user.username} &nbsp;
+          </NavItem>
+          <AmplifySignOut />
+        </Navbar>
+        <Route path="/" exact component={Home} />
+        <Route path="/upload" exact component={Upload} />
+        <Route path="/Album" exact component={Album} />
+        <Route path="/FindImage" exact component={Find} />
+      </Router>
     </div>
   );
-}
+};
 
-export default Home;
+export default HomeNav;
