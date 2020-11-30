@@ -9,6 +9,7 @@ function Upload(props) {
   const [alert, setAlert] = useState(false);
   const [tag, setTag] = useState("");
   const [labels, setLabels] = useState([]);
+  const [celeb, setCeleb] = useState([]);
 
   const findImageLabels = async (file) => {
     console.log("inside Label");
@@ -30,6 +31,28 @@ function Upload(props) {
         return labels.filter(Boolean);
       })
 
+      .catch((err) => console.log({ err }));
+  };
+
+  const celebritySearch = async (file) => {
+    console.log("Inside celeb");
+    return Predictions.identify({
+      entities: {
+        source: {
+          file,
+        },
+        celebrityDetection: true, // boolean. It will only show detected celebrities
+      },
+    })
+      .then(({ response }) => {
+        response.entities.forEach(({ boundingBox, landmarks, metadata }) => {
+          const { name, urls } = metadata; // celebrity info
+          let celeb = response.entities.map((label) => {
+            if (celeb.metadata.confidence > 70) return celeb.name;
+          });
+          return celeb.filter(Boolean);
+        });
+      })
       .catch((err) => console.log({ err }));
   };
 
@@ -60,11 +83,6 @@ function Upload(props) {
       findImageLabels(selectedFile).then((labels) => {
         console.log("m retuenddd", labels);
         setLabels(labels);
-
-        // this.selectedFileState({ file: URL.createObjectURL(selectedFile) });
-
-        //this.selectedFileState({ file: URL.createObjectURL(selectedFile) });
-        //console.log("srccccc", this.selectedFile);
         const image = {
           name: selectedFile.name,
           tag: tag,
@@ -85,8 +103,11 @@ function Upload(props) {
   return (
     <div className="container">
       {alert ? (
-        <div className="alert alert-success" role="alert">
-          image sucessfully uploaded!!!
+        <div class="alert alert-success alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert"
+          onClick={() => {setAlert(false)}}
+          >&times;</button>
+          <strong>Success!</strong> Image Sucessfully uploaded!!!
         </div>
       ) : null}
       <form className="jumbotron" onSubmit={handleChange}>

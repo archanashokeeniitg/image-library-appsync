@@ -1,0 +1,19 @@
+.card-list {
+  column-count: 3;
+}
+
+.card {
+  margin-bottom: 1rem;
+  display: flex;
+}
+
+.card--image {
+  flex: 100%;
+  margin-top: 1rem;
+  border-radius: 10px;
+}
+
+.input-group {
+  margin: 0 auto;
+  float: none;
+}

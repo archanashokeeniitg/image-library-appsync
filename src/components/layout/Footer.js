@@ -2,10 +2,8 @@ import React from "react";
 
 export default function footer() {
   return (
-    <div className="fixed-bottom bg-dark text-white">
-      image Gallery@2020
-      <br />
-      created by Trinity
+    <div className="fixed-bottom bg-dark text-white ">
+      <center>Smart Gallery@2020 created by Trinity</center>
     </div>
   );
 }
