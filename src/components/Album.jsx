@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
-import AlbumGallery from "./AlbumGallery";
-import SearchImage from "./SearchImage";
 import { Storage, API, graphqlOperation } from "aws-amplify";
-import { listPictures, getPicture, searchPictures } from "../graphql/queries";
-import { updatePicture, deletePicture } from "../graphql/mutations";
+import { listPictures} from "../graphql/queries";
+import { Jumbotron, Button, Card } from 'reactstrap';
 
-import Lightbox from "react-awesome-lightbox";
-// You need to import the CSS only once
-import "react-awesome-lightbox/build/style.css";
 
 import ReactBnbGallery from 'react-bnb-gallery';
 import 'react-bnb-gallery/dist/style.css'
@@ -53,8 +48,10 @@ function Album(props) {
 
   return (
     <div>
-      <div className="row d-flex justify-content-center">
-        <button className="btn btn-primary" type="submit" onClick={() => setIsOpen(true)}>
+      <div class="jumbotron bg-transparent">
+        <h1 className="display-3" style={{ color: 'white' }}>Album Gallery</h1>
+        <br/>
+        <button className="btn btn-primary btn-lg" type="submit" onClick={() => setIsOpen(true)}>
           Open gallery
         </button>
         <ReactBnbGallery
