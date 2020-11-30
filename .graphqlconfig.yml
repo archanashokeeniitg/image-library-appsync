@@ -1,5 +1,5 @@
 projects:
-  project2:
+  imagelibraryamplify:
     schemaPath: src/graphql/schema.json
     includes:
       - src/graphql/**/*.js
