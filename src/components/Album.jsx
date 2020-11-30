@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
-import SearchImage from "./SearchImage";
 import { Storage, API, graphqlOperation } from "aws-amplify";
-import { listPictures, getPicture, searchPictures } from "../graphql/queries";
-import { updatePicture, deletePicture } from "../graphql/mutations";
-
-// import Lightbox from "react-awesome-lightbox";
-// You need to import the CSS only once
-//import "react-awesome-lightbox/build/style.css";
+import { listPictures } from "../graphql/queries";
+import { Jumbotron, Button, Card } from "reactstrap";
 
 import ReactBnbGallery from "react-bnb-gallery";
 import "react-bnb-gallery/dist/style.css";
@@ -44,6 +39,7 @@ function Album(props) {
       photo: await Storage.get(image.file.key),
       number: image.id,
       caption: image.tag,
+      subcaption: image.labels ? image.labels.join(", ") : "",
     };
   };
 
@@ -82,14 +78,28 @@ function Album(props) {
 
   return (
     <div>
-      <div className="row d-flex justify-content-center">
-        <button
-          className="btn btn-primary"
-          type="submit"
-          onClick={() => setIsOpen(true)}
+      <div class="jumbotron bg-transparent">
+        <h1
+          className="display-3"
+          style={{
+            color: "black",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          Open gallery
-        </button>
+          Album Gallery
+        </h1>
+        <br />
+        <div class="col text-center">
+          <button
+            className="btn btn-primary btn-lg"
+            type="submit"
+            onClick={() => setIsOpen(true)}
+          >
+            Open gallery
+          </button>
+        </div>
         <ReactBnbGallery
           show={isOpen}
           photos={images}

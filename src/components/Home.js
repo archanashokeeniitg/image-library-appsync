@@ -3,7 +3,7 @@ import ImageGallery from "./ImageGallery";
 import SearchImage from "./SearchImage";
 import { Storage, API, graphqlOperation } from "aws-amplify";
 import { listPictures, getPicture, searchPictures } from "../graphql/queries";
-import { deletePicture } from "../graphql/mutations";
+import { updatePicture, deletePicture } from "../graphql/mutations";
 
 function Home(props) {
   const [images, setImages] = useState([]);
@@ -31,6 +31,7 @@ function Home(props) {
       })
     );
   };
+  
   const getOneFormatedImage = async (image) => {
     console.log("getOneFormatedImage", image);
     return {
@@ -42,7 +43,7 @@ function Home(props) {
       celeb: image.celeb,
       createdAt: image.createdAt,
       updatedAt: image.updatedAt,
-      key: image.file.key,
+      key: image.file.key
     };
   };
 
@@ -88,18 +89,43 @@ function Home(props) {
     return a;
   }
 
+
+  const manualLabels = async (imageId, tagValue) => {
+    const image = images.filter((value, index, arr) => {
+      return value.id === imageId;
+    });
+
+    let labels = image[0].labels;
+    labels.push(tagValue);
+
+    const input = {
+      id: imageId,
+      labels: labels,
+    };
+
+    try {
+      await API.graphql(graphqlOperation(updatePicture, { input: input }));
+
+      //Then I need to refresh the state with the new tag
+      await getAllImagesToState();
+    } catch (error) {
+      console.log(error);
+      alert("Cannot edit: Authentication Failed");
+    }
+  }
+
   const searchImage = async (searchLabel) => {
     var result;
     console.log("searchLabel", searchLabel);
 
     // when no search filter is passed, revert back to full list
-    if (searchLabel.label == "") {
+    if (searchLabel.tag === "") {
       await getAllImagesToState();
     } else {
       const filter = {
-        labels: {
+        tag: {
           match: {
-            labels: searchLabel,
+            tag: searchLabel,
           },
         },
       };
@@ -127,7 +153,7 @@ function Home(props) {
 
       {myAlert ? (
         <div id="success-alert" className="alert alert-danger" role="alert">
-          image Deleted successfully!!!
+          Image Deleted successfully!!!
         </div>
       ) : null}
       <br />

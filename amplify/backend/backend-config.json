@@ -1,20 +1,14 @@
 {
   "auth": {
-    "imagelibraryamplify5f7e6dc5": {
+    "project2e7f3cba6": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false
     }
   },
-  "storage": {
-    "imagelibraryamplify": {
-      "service": "S3",
-      "providerPlugin": "awscloudformation"
-    }
-  },
   "api": {
-    "imagelibraryamplify": {
+    "project2": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -22,7 +16,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authimagelibraryamplify5f7e6dc5"
+              "userPoolId": "authproject2e7f3cba6"
             }
           },
           "additionalAuthenticationProviders": []
@@ -31,12 +25,14 @@
     }
   },
   "hosting": {
-    "amplifyhosting": {
-      "service": "amplifyhosting",
-      "type": "cicd"
-    },
     "S3AndCloudFront": {
       "service": "S3AndCloudFront",
+      "providerPlugin": "awscloudformation"
+    }
+  },
+  "storage": {
+    "imagestore": {
+      "service": "S3",
       "providerPlugin": "awscloudformation"
     }
   },
@@ -46,6 +42,16 @@
       "service": "Rekognition",
       "dependsOn": [],
       "identifyType": "identifyLabels"
+    },
+    "p2polly": {
+      "providerPlugin": "awscloudformation",
+      "service": "Polly",
+      "convertType": "speechGenerator"
+    },
+    "p2s2t": {
+      "providerPlugin": "awscloudformation",
+      "service": "Transcribe",
+      "convertType": "transcription"
     }
   }
 }
