@@ -1,0 +1,13 @@
+{
+    "resourceName": "p2s2t",
+    "convertPolicyName": "transcriptionPolicy2f21dd06",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "convertType": "transcription",
+    "language": "en-US",
+    "access": "authAndGuest"
+}

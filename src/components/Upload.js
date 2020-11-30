@@ -35,30 +35,27 @@ function Upload(props) {
   };
 
   const celebritySearch = async (file) => {
-      console.log("Inside celeb");
-      return Predictions.identify({
-        entities: {
-          source: {
-            file,
-          },
-          celebrityDetection: true // boolean. It will only show detected celebrities 
-        }
-      })
+    console.log("Inside celeb");
+    return Predictions.identify({
+      entities: {
+        source: {
+          file,
+        },
+        celebrityDetection: true, // boolean. It will only show detected celebrities
+      },
+    })
       .then(({ response }) => {
         response.entities.forEach(({ boundingBox, landmarks, metadata }) => {
-          const { 
-              name,
-              urls 
-          } = metadata; // celebrity info
+          const { name, urls } = metadata; // celebrity info
           let celeb = response.entities.map((label) => {
             if (celeb.metadata.confidence > 70) return celeb.name;
           });
           return celeb.filter(Boolean);
-        })
+        });
       })
-      .catch(err => console.log({ err }));
+      .catch((err) => console.log({ err }));
   };
-  
+
   const sendImageToDB = async (image) => {
     console.log("inside db write", image);
     try {
@@ -111,8 +108,18 @@ function Upload(props) {
   return (
     <div className="container">
       {alert ? (
-        <div className="alert alert-success" role="alert">
-          Image Sucessfully Uploaded!!!
+        <div class="alert alert-success alert-dismissible">
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            onClick={() => {
+              setAlert(false);
+            }}
+          >
+            &times;
+          </button>
+          <strong>Success!</strong> Image Sucessfully uploaded!!!
         </div>
       ) : null}
       <form className="jumbotron" onSubmit={handleChange}>

@@ -19,7 +19,7 @@ const Header = (props) => {
       <Router history={history}>
         <Navbar color="dark">
           <NavbarBrand href="/" className="text-white">
-            Image Gallery
+            Smart Gallery
           </NavbarBrand>
           <Nav>
             <NavItem>

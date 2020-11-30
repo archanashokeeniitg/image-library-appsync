@@ -1,0 +1,14 @@
+{
+    "resourceName": "p2polly",
+    "convertPolicyName": "speechGeneratorPolicyd4c35502",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "convertType": "speechGenerator",
+    "language": "en-US",
+    "voice": "Joanna",
+    "access": "authAndGuest"
+}

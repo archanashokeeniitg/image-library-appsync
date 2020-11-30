@@ -8,8 +8,8 @@ import awsExports from "./aws-exports";
 import { AmazonAIPredictionsProvider } from "@aws-amplify/predictions";
 
 //components imports
-import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
+import Index from "./components/Index";
+import Welcome from "./components/Welcome";
 
 Amplify.configure(awsExports);
 Amplify.addPluggable(new AmazonAIPredictionsProvider());
@@ -35,12 +35,9 @@ function App() {
   }, []);
 
   return (
-    <AmplifyAuthenticator style={{ textAlign: "center" }}>
-      <div className="App">
-        {user ? <Header user={user} /> : null}
-        <Footer />
-      </div>
-    </AmplifyAuthenticator>
+    <div className="App">
+      {user ? <Welcome user={user}/> : <Index />}
+    </div>
   );
 }
 
