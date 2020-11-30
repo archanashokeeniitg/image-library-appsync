@@ -52,7 +52,7 @@ function ImageGallery(props) {
                 <i
                   className="fa fa-download "
                   onClick={(event) => {
-                    props.downloadImage(image)
+                    props.downloadImage(image);
                   }}
                 ></i>
                 <i
@@ -91,7 +91,7 @@ function ImageGallery(props) {
                   <CardText className="img-label">
                     <b>** Labels using Rekognition</b>
                     <br />
-                    {image.lables.join(", ")}
+                    {image.lables ? image.lables.join(", ") : ""}
                   </CardText>
                 </div>
               </div>
