@@ -67,7 +67,7 @@ function Home(props) {
 
   const downloadImage = async (image) => {
     console.log("image", image);
-    const data = await Storage.get(image.key, { download: true }).then((res) =>
+    await Storage.get(image.key, { download: true }).then((res) =>
       downloadBlob(res.Body, image.key)
     );
   };

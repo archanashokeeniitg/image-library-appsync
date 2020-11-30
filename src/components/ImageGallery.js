@@ -49,15 +49,12 @@ function ImageGallery(props) {
                     props.deleteImage(image.id);
                   }}
                 ></i>
-                <a
-                  style={{ textDecoration: "none", color: "inherit" }}
-                  download="download.png"
+                <i
+                  className="fa fa-download "
                   onClick={(event) => {
                     props.downloadImage(image);
                   }}
-                >
-                  <i className="fa fa-download "></i>
-                </a>
+                ></i>
                 <i
                   className="fa fa-edit pull-right "
                   onClick={(event) => {
@@ -86,8 +83,8 @@ function ImageGallery(props) {
                       }
                     />
                   ) : (
-                    <CardText> Tag : {image.tag}</CardText>
-                  )}
+                      <CardText> Tag : {image.tag}</CardText>
+                    )}
 
                   <CardText> Dated: {image.updatedAt.toString()}</CardText>
 

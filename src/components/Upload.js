@@ -103,8 +103,11 @@ function Upload(props) {
   return (
     <div className="container">
       {alert ? (
-        <div className="alert alert-success" role="alert">
-          Image Sucessfully uploaded!!!
+        <div class="alert alert-success alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert"
+          onClick={() => {setAlert(false)}}
+          >&times;</button>
+          <strong>Success!</strong> Image Sucessfully uploaded!!!
         </div>
       ) : null}
       <form className="jumbotron" onSubmit={handleChange}>

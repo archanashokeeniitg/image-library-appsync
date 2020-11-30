@@ -29,7 +29,17 @@ const Header = (props) => {
             </NavItem>
             <NavItem>
               <NavLink className="text-white" href="/upload">
-                upload Image
+                Upload Image
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className="text-white" href="/album">
+                Albums
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink className="text-white" href="/findimage">
+                Image Search By Web
               </NavLink>
             </NavItem>
             <NavItem>
