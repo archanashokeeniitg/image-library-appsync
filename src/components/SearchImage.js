@@ -2,9 +2,21 @@ import React, { useState } from "react";
 
 const SearchImage = (props) => {
   const [searchImage, setSearchImage] = useState("");
+  const [selectedFile, setSelectedFile] = useState("");
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     props.searchImage(searchImage);
+  };
+  const handleOnFileChangeByImage = (e) => {
+    let selectedFile = e.target.files[0];
+    setSelectedFile(selectedFile);
+    console.log("handlefileschangeFor Seacrh", selectedFile);
+  };
+
+  const handleSearchSubmitByImage = (e) => {
+    e.preventDefault();
+    console.log("inside handleSearchSubmitByImage ", selectedFile);
+    props.searchImageByImage2(selectedFile);
   };
 
   return (
@@ -20,6 +32,14 @@ const SearchImage = (props) => {
         <br />
         <button className="btn btn-primary" type="submit">
           Search
+        </button>
+      </form>
+
+      <form onSubmit={handleSearchSubmitByImage} className=" form-inline ">
+        <input type="file" onChange={handleOnFileChangeByImage} />
+
+        <button className="btn btn-primary" type="submit">
+          Search by Image
         </button>
       </form>
     </div>

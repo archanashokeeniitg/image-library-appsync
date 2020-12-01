@@ -4,12 +4,56 @@ import { createPicture } from "../graphql/mutations";
 import Predictions from "@aws-amplify/predictions";
 import awsExports from "../aws-exports";
 import "./Upload.css";
+import aws from "aws-sdk";
+const rekognition = new aws.Rekognition();
 function Upload(props) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [alert, setAlert] = useState(false);
   const [tag, setTag] = useState("");
   const [labels, setLabels] = useState([]);
 
+  aws.config.setPromisesDependency();
+  const rekognition = new aws.Rekognition();
+  aws.config.update({
+    accessKeyId: "AKIAXBVPOBMBXZTRG66Y",
+    //accessKeyId: "AKIAJEWM2L4HYT5CO6RQ",
+    secretAccessKey: "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",
+    //secretAccessKey: "z4F2isKJ6ONeNwIv/Ya+OtqKVSSvjAz/Ng2EO2l7",
+    region: "us-east-1",
+  });
+
+  const listFaces = function (req, res) {
+    console.log("listfaces successful");
+    var params = {
+      CollectionId: "youtubers",
+      MaxResults: "50",
+    };
+    rekognition.listFaces(params, function (err, data) {
+      if (err) console.log(err, err.stack);
+      else console.log("face indexed baby!!!", data);
+    });
+  };
+
+  const getFaceIndexed = async function (image, dynamoId) {
+    console.log("inside getFacedIndex", image);
+    var params = {
+      CollectionId: "youtubers",
+      DetectionAttributes: [],
+      ExternalImageId: image.file.key,
+      Image: {
+        S3Object: {
+          Bucket: image.file.bucket,
+          Name: "public/" + image.file.key,
+        },
+      },
+    };
+    console.log("params bayyyy", params);
+    rekognition.indexFaces(params, function (err, data) {
+      if (err) console.log(err, err.stack);
+      else console.log("rekogggggg", data);
+    });
+    listFaces();
+  };
   const findImageLabels = async (file) => {
     console.log("inside Label");
     return Predictions.identify({
@@ -21,12 +65,10 @@ function Upload(props) {
       },
     })
       .then((response) => {
-        console.log("lables 1", response);
+        console.log("labels", response.labels);
         let labels = response.labels.map((label) => {
           if (label.metadata.confidence > 70) return label.name;
         });
-        console.log("lables are", labels);
-        console.log("inside 3", labels.filter(Boolean));
         return labels.filter(Boolean);
       })
 
@@ -36,7 +78,9 @@ function Upload(props) {
   const sendImageToDB = async (image) => {
     console.log("inside db write", image);
     try {
-      await API.graphql(graphqlOperation(createPicture, { input: image }));
+      const data = await API.graphql(
+        graphqlOperation(createPicture, { input: image })
+      ).then((data) => console.log("id is", data.data.createPicture.id));
     } catch (err) {
       console.log("db write error");
     }
@@ -50,21 +94,18 @@ function Upload(props) {
   const handleChange = (e) => {
     console.log("inside handlechange");
     e.preventDefault();
-    console.log("{tag}", { tag });
-    console.log("{selectedFile}", selectedFile);
+    const imageFaces = async function (selectedFile) {
+      console.log("inside ImageFaces function", selectedFile);
+    };
 
     //storing image in S3
     Storage.put(selectedFile.name, selectedFile, {
       contentType: "image/png",
     }).then((result) => {
       findImageLabels(selectedFile).then((labels) => {
-        console.log("m retuenddd", labels);
+        console.log("inside findLabels", labels);
         setLabels(labels);
 
-        // this.selectedFileState({ file: URL.createObjectURL(selectedFile) });
-
-        //this.selectedFileState({ file: URL.createObjectURL(selectedFile) });
-        //console.log("srccccc", this.selectedFile);
         const image = {
           name: selectedFile.name,
           tag: tag,
@@ -75,6 +116,7 @@ function Upload(props) {
             key: selectedFile.name,
           },
         };
+        getFaceIndexed(image);
         console.log("image payload", image);
         setAlert(true);
         sendImageToDB(image);
