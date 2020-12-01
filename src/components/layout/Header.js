@@ -42,16 +42,6 @@ const Header = (props) => {
                 Image Search By Web
               </NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink className="text-white" href="/album">
-                Albums
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className="text-white" href="/findimage">
-                Image Search By Web
-              </NavLink>
-            </NavItem>
           </Nav>
           <NavItem className="text-white ">
             <i className="fa fa-user " aria-hidden="true"></i>

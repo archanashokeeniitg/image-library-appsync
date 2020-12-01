@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import SearchImage from "./SearchImage";
 import { Storage, API, graphqlOperation } from "aws-amplify";
-import { listPictures, getPicture, searchPictures } from "../graphql/queries";
-import { updatePicture, deletePicture } from "../graphql/mutations";
+import { listPictures } from "../graphql/queries";
+import { Jumbotron, Button, Card } from "reactstrap";
 
 // import Lightbox from "react-awesome-lightbox";
 // You need to import the CSS only once
@@ -44,52 +43,67 @@ function Album(props) {
       photo: await Storage.get(image.file.key),
       number: image.id,
       caption: image.tag,
+      subcaption: image.labels ? image.labels.join(", ") : "",
     };
   };
 
-  const searchImage = async (searchLabel) => {
-    var result;
-    console.log("searchLabel", searchLabel);
+  // const searchImage = async (searchLabel) => {
+  //   var result;
+  //   console.log("searchLabel", searchLabel);
 
-    // when no search filter is passed, revert back to full list
-    if (searchLabel.title === "") {
-      await getAllImagesToState();
-    } else {
-      const filter = {
-        title: {
-          match: {
-            title: searchLabel,
-          },
-        },
-      };
-      result = await API.graphql(
-        graphqlOperation(searchPictures, { filter: filter })
-      );
+  //   // when no search filter is passed, revert back to full list
+  //   if (searchLabel.title === "") {
+  //     await getAllImagesToState();
+  //   } else {
+  //     const filter = {
+  //       title: {
+  //         match: {
+  //           title: searchLabel,
+  //         },
+  //       },
+  //     };
+  //     result = await API.graphql(
+  //       graphqlOperation(searchPictures, { filter: filter })
+  //     );
 
-      if (result.data.searchPictures.items.length > 0) {
-        let imageArray = await buildImageArray(
-          result.data.searchPictures.items
-        );
-        console.log("imageArray", imageArray);
-        setImages(imageArray);
-      } else {
-        alert(" Sorry! nothing matches your search");
-      }
-    }
-  };
+  //     if (result.data.searchPictures.items.length > 0) {
+  //       let imageArray = await buildImageArray(
+  //         result.data.searchPictures.items
+  //       );
+  //       console.log("imageArray", imageArray);
+  //       setImages(imageArray);
+  //     } else {
+  //       alert(" Sorry! nothing matches your search");
+  //     }
+  //   }
+  // };
 
   console.log(images);
 
   return (
     <div>
-      <div className="row d-flex justify-content-center">
-        <button
-          className="btn btn-primary"
-          type="submit"
-          onClick={() => setIsOpen(true)}
+      <div class="jumbotron bg-transparent">
+        <h1
+          className="display-3"
+          style={{
+            color: "black",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          Open gallery
-        </button>
+          Album Gallery
+        </h1>
+        <br />
+        <div class="col text-center">
+          <button
+            className="btn btn-primary btn-lg"
+            type="submit"
+            onClick={() => setIsOpen(true)}
+          >
+            Open gallery
+          </button>
+        </div>
         <ReactBnbGallery
           show={isOpen}
           photos={images}
