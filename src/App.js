@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import './App.css';
+import "./App.css";
 
 //amplify exports
 import Amplify, { Auth, Hub } from "aws-amplify";
@@ -30,11 +30,8 @@ function App() {
     return () => Hub.remove("auth", updateUser); // cleanup
   }, []);
   return (
-    <div className="App">
-      {user ? <Welcome user={user}/> : <Index />}
-    </div>
+    <div className="App">{user ? <Welcome user={user} /> : <Index />}</div>
   );
 }
 
 export default App;
-

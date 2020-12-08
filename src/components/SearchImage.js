@@ -8,6 +8,7 @@ import awsExports from "../aws-exports";
 
 function SearchImage(props) {
   const [searchImage, setSearchImage] = useState("");
+  const [selectedFile, setSelectedFile] = useState("");
 
   function AudioRecorder(props) {
     const [recording, setRecording] = useState(false);
@@ -81,12 +82,12 @@ function SearchImage(props) {
         <div>
           {recording && (
             <button className="btn btn-secondary" onClick={stopRecording}>
-              <i class="fa fa-microphone-slash" aria-hidden="true"></i>
+              <i className="fa fa-microphone-slash" aria-hidden="true"></i>
             </button>
           )}
           {!recording && (
             <button className="btn btn-secondary" onClick={startRecording}>
-              <i class="fa fa-microphone" aria-hidden="true"></i>
+              <i className="fa fa-microphone" aria-hidden="true"></i>
             </button>
           )}
         </div>
@@ -113,11 +114,19 @@ function SearchImage(props) {
     e.preventDefault();
     props.searchImage(searchImage);
   };
+  const handleOnFileChangeByImage = (e) => {
+    let selectedFile = e.target.files[0];
+    setSelectedFile(selectedFile);
+  };
+  const handleSearchSubmitByImage = (e) => {
+    e.preventDefault();
+    props.searchImageByImage(selectedFile);
+  };
 
   return (
     <Container>
       <Row>
-        <Col xs="5">
+        <Col className="col-lg-4">
           <i
             style={{
               textDecoration: "none",
@@ -129,7 +138,7 @@ function SearchImage(props) {
             <AudioRecorder finishRecording={convertFromBuffer} />
           </i>
         </Col>
-        <Col xs="auto">
+        <Col className="col-lg-4">
           <form onSubmit={handleSearchSubmit} className=" form-inline ">
             <input
               // className="form-control"
@@ -140,6 +149,15 @@ function SearchImage(props) {
             />
             <button className="btn btn-primary" type="submit">
               Search
+            </button>
+          </form>
+        </Col>
+        <Col className="col-lg-4 ">
+          <form onSubmit={handleSearchSubmitByImage}>
+            <input type="file" onChange={handleOnFileChangeByImage} />
+
+            <button className="btn btn-primary " type="submit">
+              Search by Image
             </button>
           </form>
         </Col>

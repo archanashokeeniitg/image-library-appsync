@@ -45,84 +45,62 @@ function ImageGallery(props) {
   // class ImageGallery extends Component {
 
   return (
-    <>
-      <div className="card-list container">
-        {props.images.map((image) => (
-          <div className="card" key={image.id}>
-            <Card>
-              <CardImg
-                top
-                width="100%"
-                className="card-image"
-                alt="Happy Face"
-                src={image.src}
-              ></CardImg>
-              <CardBody>
-                <CardTitle tag="h6" className="text-center">
-                  Owner : {image.owner}
-                </CardTitle>
-                <CardTitle tag="h6">
-                  <Container>
-                    <Row>
-                      <Col xs="6" sm="4">
-                        <i
-                          className="fa fa-trash"
-                          style={{
-                            textDecoration: "none",
-                            color: "inherit",
-                            display: "flex",
-                            justifyContent: "flex-start",
-                          }}
-                          aria-hidden="true"
-                          onClick={(event) => {
-                            props.deleteImage(image.id);
-                          }}
-                        ></i>
-                      </Col>
-                      <Col xs="6" sm="4">
-                        <i
-                          className="fa fa-download "
-                          style={{
-                            textDecoration: "none",
-                            color: "inherit",
-                            display: "flex",
-                            justifyContent: "center",
-                          }}
-                          download="download.png"
-                          onClick={(event) => {
-                            props.downloadImage(image);
-                          }}
-                        ></i>
-                      </Col>
-                      <Col sm="4">
-                        <i
-                          className="fa fa-edit"
-                          style={{
-                            textDecoration: "none",
-                            color: "inherit",
-                            display: "flex",
-                            justifyContent: "flex-end",
-                          }}
-                          onClick={(event) => {
-                            setImageID(image.id);
-                            setToggle(true);
-                          }}
-                        ></i>
-                      </Col>
-                    </Row>
-                    <p className="img-label">
-                      <b>Labels using Rekognition</b>
-                      <br />
-                      {image.lables ? image.lables.join(", ") : ""}
-                    </p>
-                  </Container>
-                </CardTitle>
-              </CardBody>
-            </Card>
-          </div>
-        ))}
-      </div>
-    </>
+    <div className="card-list container">
+      {props.images.map((image) => (
+        <div className="card" key={image.id}>
+          <Card>
+            <CardImg
+              top
+              width="100%"
+              className="card-image"
+              alt="Happy Face"
+              src={image.src}
+            ></CardImg>
+            <CardBody>
+              <CardTitle tag="h6" className="text-center">
+                Owner : {image.owner}
+              </CardTitle>
+              <CardTitle tag="h6">
+                <Container>
+                  <Row>
+                    <Col xs="6" sm="4">
+                      <i
+                        className="fa fa-trash"
+                        style={{
+                          textDecoration: "none",
+                          color: "inherit",
+                          display: "flex",
+                          justifyContent: "flex-start",
+                        }}
+                        aria-hidden="true"
+                        onClick={(event) => {
+                          props.deleteImage(image.id);
+                        }}
+                      ></i>
+                    </Col>
+                    <Col xs="6" sm="4">
+                      <i
+                        className="fa fa-download "
+                        style={{
+                          textDecoration: "none",
+                          color: "inherit",
+                          display: "flex",
+                          justifyContent: "center",
+                        }}
+                        download="download.png"
+                        onClick={(event) => {
+                          props.downloadImage(image);
+                        }}
+                      ></i>
+                    </Col>
+                  </Row>
+                </Container>
+              </CardTitle>
+            </CardBody>
+          </Card>
+        </div>
+      ))}
+    </div>
   );
 }
 
